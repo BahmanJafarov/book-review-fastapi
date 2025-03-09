@@ -2,7 +2,6 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from .schemas import BookCreateModel, BookUpdateModel
 from sqlmodel import select, desc
 from .models import Book
-from datetime import datetime
 
 
 class BookService:
@@ -27,8 +26,7 @@ class BookService:
 
         new_book = Book(**book_data_dict)
 
-        session.add(new_book)
-
+        await session.add(new_book)
         await session.commit()
 
         return new_book
@@ -57,6 +55,6 @@ class BookService:
         if book_to_delete:
             await session.delete(book_to_delete)
             await session.commit()
-            return {''}
+            return {""}
         else:
             return None
